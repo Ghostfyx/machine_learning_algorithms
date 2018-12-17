@@ -5,6 +5,7 @@
 # @Site    : 求解多特征数据集损失函数
 # @File    : computeCostMult.py
 # @Software: PyCharm
+import numpy as np
 def computeCostMult(X, y, theta):
     """
        Compute cost for linear regression with multiple variables
@@ -13,3 +14,6 @@ def computeCostMult(X, y, theta):
       """
     m = y.size
     J = 0
+    h_theta = np.dot(X, theta)
+    J = (h_theta - y).dot(h_theta-y) /(2*m)
+    return J
