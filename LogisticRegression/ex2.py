@@ -16,7 +16,7 @@ from LogisticRegression.gradientFunction import gradientFunction
 from LogisticRegression.ml import plotData, plotSigmoid, plotDecisionBoundary
 import scipy.optimize as op
 
-print('begin read data')
+print('begin read data1')
 data = pd.read_csv('ex2data1', header=None)
 X = data.iloc[:, :-1]
 m,n = X.shape
@@ -27,13 +27,16 @@ plotSigmoid()
 print('compute costfunction')
 theta = np.zeros(n+1)
 X = np.concatenate((np.ones((m, 1)), X), axis=1)
-print(costFunction(theta, X, y))
+cost = costFunction(theta, X, y)
+print('the cost value is %.4f'%(cost))
 print('begin gradientFunction')
 print(gradientFunction(theta, X, y))
 print('begin use fminunc function')
-# matlab的fminunc与scipy的
+# BFGS使用拟牛顿法进行损失函数的优化
 min_cost_result = op.minimize(costFunction, theta, (X,y), 'BFGS', jac=gradientFunction)
 theta = min_cost_result.x
-print(theta)
+print(u'BFGS theta is',theta)
 print('begin Evaluating Logistic Regression')
 plotDecisionBoundary(theta, X, y)
+print('begin regularized Logistic Regression')
+# 对优化目标函数加入正则化项
